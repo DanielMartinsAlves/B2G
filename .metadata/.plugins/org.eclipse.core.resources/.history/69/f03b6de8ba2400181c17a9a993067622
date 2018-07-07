@@ -1,0 +1,173 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
+import Utilidades.PositionEletrodes;
+import javax.swing.JTextField;
+
+public class NodesPosition extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtLayout;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					NodesPosition frame = new NodesPosition();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public NodesPosition() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 619, 624);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNode = new JLabel("Node 1:");
+		lblNode.setBounds(10, 59, 46, 14);
+		contentPane.add(lblNode);
+		
+		JComboBox cbN1 = new JComboBox();
+		cbN1.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN1.setBounds(66, 56, 80, 20);
+		contentPane.add(cbN1);
+		
+		JComboBox cbN5 = new JComboBox();
+		cbN5.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN5.setBounds(66, 87, 80, 20);
+		contentPane.add(cbN5);
+		
+		JLabel lblNode_1 = new JLabel("Node 5:");
+		lblNode_1.setBounds(10, 90, 46, 14);
+		contentPane.add(lblNode_1);
+		
+		JComboBox cbN2 = new JComboBox();
+		cbN2.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN2.setBounds(212, 56, 80, 20);
+		contentPane.add(cbN2);
+		
+		JLabel lblNode_2 = new JLabel("Node 2:");
+		lblNode_2.setBounds(156, 59, 46, 14);
+		contentPane.add(lblNode_2);
+		
+		JComboBox cbN6 = new JComboBox();
+		cbN6.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN6.setBounds(212, 87, 80, 20);
+		contentPane.add(cbN6);
+		
+		JLabel lblNode_3 = new JLabel("Node 6:");
+		lblNode_3.setBounds(156, 90, 46, 14);
+		contentPane.add(lblNode_3);
+		
+		JComboBox cbN3 = new JComboBox();
+		cbN3.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN3.setBounds(358, 56, 80, 20);
+		contentPane.add(cbN3);
+		
+		JLabel lblNode_4 = new JLabel("Node 3:");
+		lblNode_4.setBounds(302, 59, 46, 14);
+		contentPane.add(lblNode_4);
+		
+		JComboBox cbN7 = new JComboBox();
+		cbN7.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN7.setBounds(358, 87, 80, 20);
+		contentPane.add(cbN7);
+		
+		JLabel lblNode_5 = new JLabel("Node 7:");
+		lblNode_5.setBounds(302, 90, 46, 14);
+		contentPane.add(lblNode_5);
+		
+		JComboBox cbN4 = new JComboBox();
+		cbN4.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN4.setBounds(504, 56, 80, 20);
+		contentPane.add(cbN4);
+		
+		JLabel lblNode_6 = new JLabel("Node 4:");
+		lblNode_6.setBounds(448, 59, 46, 14);
+		contentPane.add(lblNode_6);
+		
+		JComboBox cbN8 = new JComboBox();
+		cbN8.setModel(new DefaultComboBoxModel(PositionEletrodes.values()));
+		cbN8.setBounds(504, 87, 80, 20);
+		contentPane.add(cbN8);
+		
+		JLabel lblNode_7 = new JLabel("Node 8:");
+		lblNode_7.setBounds(448, 90, 46, 14);
+		contentPane.add(lblNode_7);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bielz\\eclipse-workspace\\Graficos\\images\\position-eletrodes1020.jpg"));
+		lblNewLabel.setBounds(0, 118, 600, 469);
+		contentPane.add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("Save");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//colocar este código em algum outro lugar e chamar aqui
+				String texto = txtLayout.getText()+","+cbN1.getSelectedItem()+","+cbN2.getSelectedItem()+","+cbN3.getSelectedItem()+","+cbN4.getSelectedItem()+","+cbN5.getSelectedItem()+","+cbN6.getSelectedItem()+","+cbN7.getSelectedItem()+","+cbN8.getSelectedItem();
+				PrintWriter arquivo = null;
+				try {
+					FileWriter fw = new FileWriter("layouts.txt",true);
+				    BufferedWriter bw = new BufferedWriter(fw);
+					arquivo = new PrintWriter(bw);
+					arquivo.println(texto);
+					arquivo.close();
+					JOptionPane.showMessageDialog(contentPane, "Layout successfully added");
+				} catch (IOException e) {
+					e.printStackTrace();
+					arquivo.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+					arquivo.close();
+				}
+				
+				
+			}
+		});
+		btnNewButton.setBounds(333, 11, 136, 23);
+		contentPane.add(btnNewButton);
+		
+		txtLayout = new JTextField();
+		txtLayout.setBounds(187, 12, 136, 20);
+		contentPane.add(txtLayout);
+		txtLayout.setColumns(10);
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setBounds(131, 15, 46, 14);
+		contentPane.add(lblName);
+	}
+}

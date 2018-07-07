@@ -1,0 +1,20 @@
+package algoritmos;
+
+import org.graphstream.algorithm.Toolkit;
+import org.graphstream.graph.Graph;
+
+public class AlgoritmoController {
+	private Graph grafo;
+	public AlgoritmoController(Graph grafo) {
+		this.grafo = grafo;
+	}
+	public double calcularGrauMedio() {
+		return Toolkit.averageDegree(this.grafo);	
+	}
+	public double calcularDensidade() {
+		return Toolkit.density(grafo);
+	}
+	public double calcularCoeficienteDeClusterizacaoMedio() {
+		return Toolkit.averageClusteringCoefficient(grafo);
+	}
+}

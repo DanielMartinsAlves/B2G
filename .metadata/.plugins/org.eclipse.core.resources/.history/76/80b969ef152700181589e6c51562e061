@@ -1,0 +1,12 @@
+package Utilidades;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Nodexy {
+	Map<String, double[]> aMap = new HashMap<String, double[]>();
+	public Nodexy() {
+		double[] position = {1,2};
+		aMap.put(PositionEletrodes.Nz.texto,position );
+	}
+}

@@ -1,0 +1,210 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
+
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.swingViewer.ViewPanel;
+import org.graphstream.ui.view.Viewer;
+import org.jfree.chart.ChartPanel;
+
+import Utilidades.ImagePanel;
+import controller.GrafoController;
+import graficos.GraficoLinha;
+import model.Configuracoes;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import java.awt.SystemColor;
+
+public class JPrincipal extends JFrame {
+
+	private JPanel contentPane;
+	private GrafoController grafoController;
+	private JTextField txtTempoAtualizacao;
+	private JTextField txtRegistroPorGrafo;
+	private JTextField txtLimiarPearson;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JPrincipal frame = new JPrincipal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public JPrincipal() {
+		grafoController = new GrafoController();
+		Configuracoes config = new Configuracoes();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setBounds(100, 100, 1280, 720);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JPanel pnOpcoes = new JPanel();
+		pnOpcoes.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnOpcoes.setBackground(UIManager.getColor("Button.light"));
+		
+		JPanel pnGrafo = new JPanel(); 
+		pnGrafo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnGrafo.setBackground(Color.WHITE);
+		pnGrafo.setLayout(new BorderLayout(0, 0));
+		pnOpcoes.setLayout(null);
+		
+		JLabel lblOpes = new JLabel("OP\u00C7\u00D5ES");
+		lblOpes.setBackground(Color.WHITE);
+		lblOpes.setBounds(2, 11, 292, 14);
+		lblOpes.setHorizontalAlignment(SwingConstants.CENTER);
+		pnOpcoes.add(lblOpes);
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		txtTempoAtualizacao = new JTextField();
+		txtTempoAtualizacao.setText("500");
+		txtTempoAtualizacao.setBounds(198, 36, 81, 20);
+		pnOpcoes.add(txtTempoAtualizacao);
+		txtTempoAtualizacao.setColumns(10);
+		
+		JLabel lblAtualizaACada = new JLabel("Atualiza a cada (ms)");
+		lblAtualizaACada.setBounds(10, 42, 178, 14);
+		pnOpcoes.add(lblAtualizaACada);
+		
+		txtRegistroPorGrafo = new JTextField();
+		txtRegistroPorGrafo.setText("115");
+		txtRegistroPorGrafo.setColumns(10);
+		txtRegistroPorGrafo.setBounds(198, 75, 81, 20);
+		pnOpcoes.add(txtRegistroPorGrafo);
+		
+		JLabel lblRegistrosPorGrafo = new JLabel("Registros por grafo");
+		lblRegistrosPorGrafo.setBounds(10, 78, 178, 14);
+		pnOpcoes.add(lblRegistrosPorGrafo);
+		
+		JButton btnParar = new JButton("PARAR");
+		btnParar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				config.setPararGrafo(true);
+			}
+		});
+		btnParar.setBounds(2, 187, 292, 23);
+		pnOpcoes.add(btnParar);
+		
+		txtLimiarPearson = new JTextField();
+		txtLimiarPearson.setText("0.8");
+		txtLimiarPearson.setColumns(10);
+		txtLimiarPearson.setBounds(198, 106, 81, 20);
+		pnOpcoes.add(txtLimiarPearson);
+		
+		JLabel lblLimiarPearson = new JLabel("Limiar Pearson");
+		lblLimiarPearson.setBounds(12, 109, 176, 14);
+		pnOpcoes.add(lblLimiarPearson);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(2, 27, 292, 2);
+		pnOpcoes.add(separator);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		
+		ImagePanel pnImage = new ImagePanel();
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(pnOpcoes, GroupLayout.PREFERRED_SIZE, 304, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnGrafo, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnImage, GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(pnOpcoes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
+				.addComponent(pnGrafo, GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(pnImage, GroupLayout.PREFERRED_SIZE, 670, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(147, Short.MAX_VALUE))
+		);
+		
+		
+		
+		contentPane.setLayout(gl_contentPane);
+	  
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Graph graph = new SingleGraph("Tutorial 1");
+
+		Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+		viewer.disableAutoLayout();
+		ViewPanel view = viewer.addDefaultView(false);   // false indicates "no JFrame".
+	    pnImage.add(view, BorderLayout.CENTER);
+	    pnImage.setLayout(new BorderLayout(0, 0));
+	    grafoController.getGrafoZerado(graph);
+
+
+	    JButton btnIniciar = new JButton("INICIAR");
+		btnIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					
+					config.setTempoAtualizacao(Integer.parseInt(txtTempoAtualizacao.getText()));
+					config.setRegistrosPorGrafo(Integer.parseInt(txtRegistroPorGrafo.getText()));
+					config.setLimiar(Double.parseDouble(txtLimiarPearson.getText()));
+					config.setPararGrafo(false);
+					grafoController.iniciarFonteDeDados(config);
+					grafoController.atualizarGrafoTempoExecucao(graph, config);
+			}
+		});
+		btnIniciar.setBounds(2, 153, 292, 23);
+		pnOpcoes.add(btnIniciar);
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		 //ImagePanel panelImage = new ImagePanel("images/background.png");
+		 //pnGrafo.add(panelImage);
+	
+	}
+}

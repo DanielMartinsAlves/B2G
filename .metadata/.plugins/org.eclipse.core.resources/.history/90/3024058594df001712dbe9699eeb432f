@@ -1,0 +1,42 @@
+package algoritmos;
+
+import org.graphstream.algorithm.BetweennessCentrality;
+import org.graphstream.algorithm.Toolkit;
+import org.graphstream.algorithm.measure.EigenvectorCentrality;
+import org.graphstream.graph.Graph;
+
+public class AlgoritmoController {
+	private Graph grafo;
+	public AlgoritmoController(Graph grafo) {
+		this.grafo = grafo;
+	}
+	public double calcularGrauMedio() {
+		return Toolkit.averageDegree(this.grafo);	
+	}
+	public double calcularDensidade() {
+		return Toolkit.density(grafo);
+	}
+	public double calcularCoeficienteDeClusterizacaoMedio() {
+		return Toolkit.averageClusteringCoefficient(grafo);
+	}
+	public double calcularCentralidadeDeIntermediacaoMedia() {
+		BetweennessCentrality bcb = new BetweennessCentrality();
+		bcb.init(grafo);
+		bcb.compute();
+		double soma = 0.0;
+		for(int coluna = 0; coluna <grafo.getNodeCount();coluna++) {
+			soma += Double.parseDouble(grafo.getNode(coluna).getAttribute("Cb"));
+		}
+		return soma/grafo.getNodeCount();
+	}
+	public double calcularCentralidadeDeAltoVetorMedia() {
+		EigenvectorCentrality ece = new EigenvectorCentrality();
+		ece.init(grafo);
+		ece.compute();
+		double soma = 0.0;
+		for(int coluna = 0; coluna <grafo.getNodeCount();coluna++) {
+			soma += Double.parseDouble(grafo.getNode(coluna).getAttribute("Ce"));
+		}
+		return soma/grafo.getNodeCount();
+	}
+}

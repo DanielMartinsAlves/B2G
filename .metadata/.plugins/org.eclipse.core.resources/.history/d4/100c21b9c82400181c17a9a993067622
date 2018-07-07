@@ -1,0 +1,474 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
+import Utilidades.PositionEletrodes;
+import javax.swing.JTextField;
+import Utilidades.RoundButton;
+
+public class NodesPosition extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					NodesPosition frame = new NodesPosition();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public NodesPosition() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 846, 844);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnNewButton = new JButton("Start");
+		
+		btnNewButton.setBounds(262, 31, 136, 23);
+		contentPane.add(btnNewButton);
+		
+		RoundButton rndbtnFpz = new RoundButton((String) null);
+		rndbtnFpz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rndbtnFpz.setBackground(Color.green);
+			}
+		});
+		rndbtnFpz.setText("Nz");
+		rndbtnFpz.setBounds(386, 118, 52, 51);
+		contentPane.add(rndbtnFpz);
+		
+		RoundButton roundButton = new RoundButton((String) null);
+		roundButton.setText("Fpz");
+		roundButton.setBounds(386, 180, 52, 51);
+		contentPane.add(roundButton);
+		roundButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				roundButton.setBackground(Color.green);
+			}
+		});
+		
+		RoundButton rndbtnAfz = new RoundButton((String) null);
+		rndbtnAfz.setText("AFz");
+		rndbtnAfz.setBounds(386, 242, 52, 51);
+		contentPane.add(rndbtnAfz);
+		rndbtnAfz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rndbtnAfz.setBackground(Color.green);
+			}
+		});
+		
+		RoundButton rndbtnFz = new RoundButton((String) null);
+		rndbtnFz.setText("Fz");
+		rndbtnFz.setBounds(386, 304, 52, 51);
+		contentPane.add(rndbtnFz);
+		
+		RoundButton rndbtnFcz = new RoundButton((String) null);
+		rndbtnFcz.setText("FCz");
+		rndbtnFcz.setBounds(386, 366, 52, 51);
+		contentPane.add(rndbtnFcz);
+		
+		RoundButton rndbtnCz = new RoundButton((String) null);
+		rndbtnCz.setText("Cz");
+		rndbtnCz.setBounds(386, 428, 52, 51);
+		contentPane.add(rndbtnCz);
+		
+		RoundButton rndbtnCpz = new RoundButton((String) null);
+		rndbtnCpz.setText("CPz");
+		rndbtnCpz.setBounds(386, 490, 52, 51);
+		contentPane.add(rndbtnCpz);
+		
+		RoundButton rndbtnPz = new RoundButton((String) null);
+		rndbtnPz.setText("Pz");
+		rndbtnPz.setBounds(386, 552, 52, 51);
+		contentPane.add(rndbtnPz);
+		
+		RoundButton rndbtnPoz = new RoundButton((String) null);
+		rndbtnPoz.setText("POz");
+		rndbtnPoz.setBounds(386, 614, 52, 51);
+		contentPane.add(rndbtnPoz);
+		
+		RoundButton rndbtnOz = new RoundButton((String) null);
+		rndbtnOz.setText("Oz");
+		rndbtnOz.setBounds(386, 676, 52, 51);
+		contentPane.add(rndbtnOz);
+		
+		RoundButton rndbtnIz = new RoundButton((String) null);
+		rndbtnIz.setText("Iz");
+		rndbtnIz.setBounds(386, 738, 52, 51);
+		contentPane.add(rndbtnIz);
+		
+		RoundButton roundButton_1 = new RoundButton((String) null);
+		roundButton_1.setText("Cz");
+		roundButton_1.setBounds(324, 428, 52, 51);
+		contentPane.add(roundButton_1);
+		
+		RoundButton roundButton_2 = new RoundButton((String) null);
+		roundButton_2.setText("Cz");
+		roundButton_2.setBounds(262, 428, 52, 51);
+		contentPane.add(roundButton_2);
+		
+		RoundButton roundButton_3 = new RoundButton((String) null);
+		roundButton_3.setText("Cz");
+		roundButton_3.setBounds(200, 428, 52, 51);
+		contentPane.add(roundButton_3);
+		
+		RoundButton roundButton_4 = new RoundButton((String) null);
+		roundButton_4.setText("Cz");
+		roundButton_4.setBounds(138, 428, 52, 51);
+		contentPane.add(roundButton_4);
+		
+		RoundButton roundButton_5 = new RoundButton((String) null);
+		roundButton_5.setText("Cz");
+		roundButton_5.setBounds(76, 428, 52, 51);
+		contentPane.add(roundButton_5);
+		
+		RoundButton roundButton_6 = new RoundButton((String) null);
+		roundButton_6.setText("Cz");
+		roundButton_6.setBounds(14, 428, 52, 51);
+		contentPane.add(roundButton_6);
+		
+		RoundButton roundButton_7 = new RoundButton((String) null);
+		roundButton_7.setText("Cz");
+		roundButton_7.setBounds(448, 428, 52, 51);
+		contentPane.add(roundButton_7);
+		
+		RoundButton roundButton_8 = new RoundButton((String) null);
+		roundButton_8.setText("Cz");
+		roundButton_8.setBounds(510, 428, 52, 51);
+		contentPane.add(roundButton_8);
+		
+		RoundButton roundButton_9 = new RoundButton((String) null);
+		roundButton_9.setText("Cz");
+		roundButton_9.setBounds(572, 428, 52, 51);
+		contentPane.add(roundButton_9);
+		
+		RoundButton roundButton_10 = new RoundButton((String) null);
+		roundButton_10.setText("Cz");
+		roundButton_10.setBounds(634, 428, 52, 51);
+		contentPane.add(roundButton_10);
+		
+		RoundButton roundButton_11 = new RoundButton((String) null);
+		roundButton_11.setText("Cz");
+		roundButton_11.setBounds(696, 428, 52, 51);
+		contentPane.add(roundButton_11);
+		
+		RoundButton roundButton_12 = new RoundButton((String) null);
+		roundButton_12.setText("Cz");
+		roundButton_12.setBounds(758, 428, 52, 51);
+		contentPane.add(roundButton_12);
+		
+		RoundButton roundButton_13 = new RoundButton((String) null);
+		roundButton_13.setText("Cz");
+		roundButton_13.setBounds(442, 366, 52, 51);
+		contentPane.add(roundButton_13);
+		
+		RoundButton roundButton_14 = new RoundButton((String) null);
+		roundButton_14.setText("Cz");
+		roundButton_14.setBounds(328, 366, 52, 51);
+		contentPane.add(roundButton_14);
+		
+		RoundButton roundButton_15 = new RoundButton((String) null);
+		roundButton_15.setText("Cz");
+		roundButton_15.setBounds(270, 363, 52, 51);
+		contentPane.add(roundButton_15);
+		
+		RoundButton roundButton_16 = new RoundButton((String) null);
+		roundButton_16.setText("Cz");
+		roundButton_16.setBounds(210, 360, 52, 51);
+		contentPane.add(roundButton_16);
+		
+		RoundButton roundButton_17 = new RoundButton((String) null);
+		roundButton_17.setText("Cz");
+		roundButton_17.setBounds(150, 357, 52, 51);
+		contentPane.add(roundButton_17);
+		
+		RoundButton roundButton_18 = new RoundButton((String) null);
+		roundButton_18.setText("Cz");
+		roundButton_18.setBounds(90, 350, 52, 51);
+		contentPane.add(roundButton_18);
+		
+		RoundButton roundButton_20 = new RoundButton((String) null);
+		roundButton_20.setText("Cz");
+		roundButton_20.setBounds(335, 302, 52, 51);
+		contentPane.add(roundButton_20);
+		
+		RoundButton roundButton_21 = new RoundButton((String) null);
+		roundButton_21.setText("Cz");
+		roundButton_21.setBounds(284, 299, 52, 51);
+		contentPane.add(roundButton_21);
+		
+		RoundButton roundButton_22 = new RoundButton((String) null);
+		roundButton_22.setText("Cz");
+		roundButton_22.setBounds(232, 295, 52, 51);
+		contentPane.add(roundButton_22);
+		
+		RoundButton roundButton_23 = new RoundButton((String) null);
+		roundButton_23.setText("Cz");
+		roundButton_23.setBounds(181, 285, 52, 51);
+		contentPane.add(roundButton_23);
+		
+		RoundButton roundButton_24 = new RoundButton((String) null);
+		roundButton_24.setText("Cz");
+		roundButton_24.setBounds(124, 270, 52, 51);
+		contentPane.add(roundButton_24);
+		
+		RoundButton roundButton_25 = new RoundButton((String) null);
+		roundButton_25.setText("AFz");
+		roundButton_25.setBounds(296, 243, 52, 51);
+		contentPane.add(roundButton_25);
+		
+		RoundButton roundButton_26 = new RoundButton((String) null);
+		roundButton_26.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				roundButton_26.setBackground(Color.green);
+			}
+		});
+		roundButton_26.setText("AFz");
+		roundButton_26.setBounds(240, 228, 52, 51);
+		contentPane.add(roundButton_26);
+		
+		RoundButton roundButton_27 = new RoundButton((String) null);
+		roundButton_27.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				roundButton_27.setBackground(Color.green);
+			}
+		});
+		roundButton_27.setText("AFz");
+		roundButton_27.setBounds(304, 193, 52, 51);
+		contentPane.add(roundButton_27);
+		
+		RoundButton roundButton_19 = new RoundButton((String) null);
+		roundButton_19.setText("Cz");
+		roundButton_19.setBounds(90, 505, 52, 51);
+		contentPane.add(roundButton_19);
+		
+		RoundButton roundButton_28 = new RoundButton((String) null);
+		roundButton_28.setText("Cz");
+		roundButton_28.setBounds(124, 580, 52, 51);
+		contentPane.add(roundButton_28);
+		
+		RoundButton roundButton_29 = new RoundButton((String) null);
+		roundButton_29.setText("Cz");
+		roundButton_29.setBounds(150, 500, 52, 51);
+		contentPane.add(roundButton_29);
+		
+		RoundButton roundButton_30 = new RoundButton((String) null);
+		roundButton_30.setText("Cz");
+		roundButton_30.setBounds(210, 495, 52, 51);
+		contentPane.add(roundButton_30);
+		
+		RoundButton roundButton_31 = new RoundButton((String) null);
+		roundButton_31.setText("Cz");
+		roundButton_31.setBounds(272, 493, 52, 51);
+		contentPane.add(roundButton_31);
+		
+		RoundButton roundButton_32 = new RoundButton((String) null);
+		roundButton_32.setText("Cz");
+		roundButton_32.setBounds(328, 490, 52, 51);
+		contentPane.add(roundButton_32);
+		
+		RoundButton roundButton_33 = new RoundButton((String) null);
+		roundButton_33.setText("Cz");
+		roundButton_33.setBounds(181, 570, 52, 51);
+		contentPane.add(roundButton_33);
+		
+		RoundButton roundButton_34 = new RoundButton((String) null);
+		roundButton_34.setText("Cz");
+		roundButton_34.setBounds(232, 558, 52, 51);
+		contentPane.add(roundButton_34);
+		
+		RoundButton roundButton_35 = new RoundButton((String) null);
+		roundButton_35.setText("Cz");
+		roundButton_35.setBounds(284, 554, 52, 51);
+		contentPane.add(roundButton_35);
+		
+		RoundButton roundButton_36 = new RoundButton((String) null);
+		roundButton_36.setText("Cz");
+		roundButton_36.setBounds(335, 553, 52, 51);
+		contentPane.add(roundButton_36);
+		
+		RoundButton roundButton_37 = new RoundButton((String) null);
+		roundButton_37.setText("AFz");
+		roundButton_37.setBounds(296, 614, 52, 51);
+		contentPane.add(roundButton_37);
+		
+		RoundButton roundButton_38 = new RoundButton((String) null);
+		roundButton_38.setText("AFz");
+		roundButton_38.setBounds(304, 666, 52, 51);
+		contentPane.add(roundButton_38);
+		
+		RoundButton roundButton_39 = new RoundButton((String) null);
+		roundButton_39.setText("AFz");
+		roundButton_39.setBounds(230, 630, 52, 51);
+		contentPane.add(roundButton_39);
+		
+		RoundButton roundButton_40 = new RoundButton((String) null);
+		roundButton_40.setText("AFz");
+		roundButton_40.setBounds(464, 666, 52, 51);
+		contentPane.add(roundButton_40);
+		
+		RoundButton roundButton_41 = new RoundButton((String) null);
+		roundButton_41.setText("AFz");
+		roundButton_41.setBounds(534, 630, 52, 51);
+		contentPane.add(roundButton_41);
+		
+		RoundButton roundButton_42 = new RoundButton((String) null);
+		roundButton_42.setText("Cz");
+		roundButton_42.setBounds(591, 570, 52, 51);
+		contentPane.add(roundButton_42);
+		
+		RoundButton roundButton_43 = new RoundButton((String) null);
+		roundButton_43.setText("Cz");
+		roundButton_43.setBounds(625, 500, 52, 51);
+		contentPane.add(roundButton_43);
+		
+		RoundButton roundButton_44 = new RoundButton((String) null);
+		roundButton_44.setText("Cz");
+		roundButton_44.setBounds(625, 357, 52, 51);
+		contentPane.add(roundButton_44);
+		
+		RoundButton roundButton_45 = new RoundButton((String) null);
+		roundButton_45.setText("Cz");
+		roundButton_45.setBounds(591, 285, 52, 51);
+		contentPane.add(roundButton_45);
+		
+		RoundButton roundButton_46 = new RoundButton((String) null);
+		roundButton_46.setText("AFz");
+		roundButton_46.setBounds(534, 228, 52, 51);
+		contentPane.add(roundButton_46);
+		
+		RoundButton roundButton_47 = new RoundButton((String) null);
+		roundButton_47.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				roundButton_47.setBackground(Color.green);
+			}
+		});
+		roundButton_47.setText("AFz");
+		roundButton_47.setBounds(464, 193, 52, 51);
+		contentPane.add(roundButton_47);
+		
+		RoundButton roundButton_48 = new RoundButton((String) null);
+		roundButton_48.setText("AFz");
+		roundButton_48.setBounds(475, 614, 52, 51);
+		contentPane.add(roundButton_48);
+		
+		RoundButton roundButton_49 = new RoundButton((String) null);
+		roundButton_49.setText("Cz");
+		roundButton_49.setBounds(438, 552, 52, 51);
+		contentPane.add(roundButton_49);
+		
+		RoundButton roundButton_50 = new RoundButton((String) null);
+		roundButton_50.setText("Cz");
+		roundButton_50.setBounds(489, 554, 52, 51);
+		contentPane.add(roundButton_50);
+		
+		RoundButton roundButton_51 = new RoundButton((String) null);
+		roundButton_51.setText("Cz");
+		roundButton_51.setBounds(540, 560, 52, 51);
+		contentPane.add(roundButton_51);
+		
+		RoundButton roundButton_52 = new RoundButton((String) null);
+		roundButton_52.setText("Cz");
+		roundButton_52.setBounds(442, 490, 52, 51);
+		contentPane.add(roundButton_52);
+		
+		RoundButton roundButton_53 = new RoundButton((String) null);
+		roundButton_53.setText("Cz");
+		roundButton_53.setBounds(502, 493, 52, 51);
+		contentPane.add(roundButton_53);
+		
+		RoundButton roundButton_54 = new RoundButton((String) null);
+		roundButton_54.setText("Cz");
+		roundButton_54.setBounds(563, 495, 52, 51);
+		contentPane.add(roundButton_54);
+		
+		RoundButton roundButton_55 = new RoundButton((String) null);
+		roundButton_55.setText("Cz");
+		roundButton_55.setBounds(653, 580, 52, 51);
+		contentPane.add(roundButton_55);
+		
+		RoundButton roundButton_56 = new RoundButton((String) null);
+		roundButton_56.setText("Cz");
+		roundButton_56.setBounds(687, 505, 52, 51);
+		contentPane.add(roundButton_56);
+		
+		RoundButton roundButton_57 = new RoundButton((String) null);
+		roundButton_57.setText("Cz");
+		roundButton_57.setBounds(687, 350, 52, 51);
+		contentPane.add(roundButton_57);
+		
+		RoundButton roundButton_58 = new RoundButton((String) null);
+		roundButton_58.setText("Cz");
+		roundButton_58.setBounds(653, 270, 52, 51);
+		contentPane.add(roundButton_58);
+		
+		RoundButton roundButton_59 = new RoundButton((String) null);
+		roundButton_59.setText("Cz");
+		roundButton_59.setBounds(502, 363, 52, 51);
+		contentPane.add(roundButton_59);
+		
+		RoundButton roundButton_60 = new RoundButton((String) null);
+		roundButton_60.setText("Cz");
+		roundButton_60.setBounds(563, 360, 52, 51);
+		contentPane.add(roundButton_60);
+		
+		RoundButton roundButton_61 = new RoundButton((String) null);
+		roundButton_61.setText("Cz");
+		roundButton_61.setBounds(438, 302, 52, 51);
+		contentPane.add(roundButton_61);
+		
+		RoundButton roundButton_62 = new RoundButton((String) null);
+		roundButton_62.setText("Cz");
+		roundButton_62.setBounds(489, 298, 52, 51);
+		contentPane.add(roundButton_62);
+		
+		RoundButton roundButton_63 = new RoundButton((String) null);
+		roundButton_63.setText("Cz");
+		roundButton_63.setBounds(540, 295, 52, 51);
+		contentPane.add(roundButton_63);
+		
+		RoundButton roundButton_64 = new RoundButton((String) null);
+		roundButton_64.setText("AFz");
+		roundButton_64.setBounds(470, 242, 52, 51);
+		contentPane.add(roundButton_64);
+		
+		JButton btnStop = new JButton("Stop");
+		btnStop.setBounds(408, 31, 136, 23);
+		contentPane.add(btnStop);
+	}
+}

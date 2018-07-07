@@ -1,0 +1,18 @@
+package dao;
+
+import java.util.List;
+
+import model.MatrizAdjacencia;
+
+import java.util.ArrayList;
+
+public class GrafoDao {
+	private List listaMatrizAdjacencia;
+	public GrafoDao() {
+		listaMatrizAdjacencia = new ArrayList();
+		MatrizAdjacencia matriz = new MatrizAdjacencia();
+	}
+	public List getListaMatrizAdjacencia() {	
+	return this.listaMatrizAdjacencia;
+	}
+}

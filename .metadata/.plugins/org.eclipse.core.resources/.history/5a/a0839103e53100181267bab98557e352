@@ -1,0 +1,75 @@
+package view;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class ConversorArquivo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		JFileChooser fileChooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	            "Text Files(*.txt)", "txt");
+	    fileChooser.setFileFilter(filter);
+	    fileChooser.setCurrentDirectory(new File(System
+	            .getProperty("user.home")));
+	    
+	    int result = fileChooser.showOpenDialog(new JFrame());
+	    if (result == JFileChooser.APPROVE_OPTION) {
+	        File selectedFile = fileChooser.getSelectedFile();
+	        FileReader arq;
+	        PrintWriter writer = null;
+			try {
+				arq = new FileReader(selectedFile);
+				BufferedReader lerArq = new BufferedReader(arq);
+				
+				FileWriter fw = new FileWriter("F:/DadosParaUso/"+selectedFile.getName().replace(".txt", "2.txt"), true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+				writer = new PrintWriter(bw);
+				
+				 
+			      String linha = lerArq.readLine();
+			      while (linha != null) {
+				        String[] arrayLinha = linha.split("\t");
+				        for(int i = 0;i< arrayLinha.length;i+=22) {
+				        	String linhaArquivoNovo = "";
+				        	for(int x =i; x<(i+22);x++) {
+				        		if((x+i)<arrayLinha.length) {
+				        		if(x==i)
+				        		linhaArquivoNovo +="0.0,"+arrayLinha[x+i];
+				        		else
+				        		linhaArquivoNovo+=","+arrayLinha[x+i];
+				        		}
+				        	}
+				        	writer.println(linhaArquivoNovo);
+				        }
+				        
+				        linha = lerArq.readLine();    
+				        JOptionPane.showMessageDialog(null, "Terminou leitura");
+			      }
+			      JOptionPane.showMessageDialog(null, "Conversão terminada!!");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				writer.close();
+			}
+		       
+	    }
+	}
+
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<addComponent
+		id="custom_1513804500004"
+		name="ImagePanel"
+		visible="true"
+		class="Utilidades.ImagePanel"
+		category="org.eclipse.wb.swing.containers"/>
+	<addComponent
+		id="custom_1520723675592"
+		name="RoundButton"
+		visible="true"
+		class="Utilidades.RoundButton"
+		category="org.eclipse.wb.swing.components"/>
+</commands>

@@ -1,0 +1,84 @@
+package controller;
+
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
+
+public class GrafoController {
+
+	public void getGrafo(Graph graph) {
+		
+		atualizarGrafoTempoExecucao(graph);
+	}
+	public void inicializarGrafo(Graph graph) {
+		graph.clear();
+		graph.addNode("A");
+		Node node = graph.getNode("A");
+		node.setAttribute("xy", 0, 1);
+		graph.addNode("B");
+		node = graph.getNode("B");
+		node.setAttribute("xy", 0.7, 0.7);
+		graph.addNode("C");
+		node = graph.getNode("C");
+		node.setAttribute("xy", 1, 0);
+		graph.addNode("D");
+		node = graph.getNode("D");
+		node.setAttribute("xy", 0.7, -0.7);
+		graph.addNode("E");
+		node = graph.getNode("E");
+		node.setAttribute("xy", 0, -1);
+		graph.addNode("F");
+		node = graph.getNode("F");
+		node.setAttribute("xy", -0.7, -0.7);
+		graph.addNode("G");
+		node = graph.getNode("G");
+		node.setAttribute("xy", -1, 0);
+		graph.addNode("H");
+		node = graph.getNode("H");
+		node.setAttribute("xy", -0.7, 0.7);
+	}
+	public void atualizarGrafoTempoExecucao(Graph graph) {
+		new Thread() {
+			@Override
+			public void run() {
+				inicializarGrafo(graph);
+				graph.addEdge("AB", "A", "B");
+				graph.addEdge("AC", "A", "C");
+				graph.addEdge("AD", "A", "D");
+				graph.addEdge("AE", "A", "E");
+				graph.addEdge("AF", "A", "F");
+				graph.addEdge("AG", "A", "G");
+				graph.addEdge("BC", "B", "C");
+				graph.addEdge("BD", "B", "D");
+				graph.addEdge("BE", "B", "E");
+				graph.addEdge("BF", "B", "F");
+				graph.addEdge("BG", "B", "G");
+				graph.addEdge("CD", "C", "D");
+				graph.addEdge("CE", "C", "E");
+				graph.addEdge("CF", "C", "F");
+				graph.addEdge("CG", "C", "G");
+				graph.addEdge("DE", "D", "E");
+				graph.addEdge("DF", "D", "F");
+				graph.addEdge("DG", "D", "G");
+				graph.addEdge("EF", "E", "F");
+				graph.addEdge("EG", "E", "G");
+				graph.addEdge("EH", "E", "H");
+				graph.addEdge("FG", "F", "G");
+				graph.addEdge("FH", "F", "H");
+				graph.addEdge("GH", "G", "H");
+				try {
+					sleep(300);
+					inicializarGrafo(graph);
+					graph.addEdge("AB", "A", "B");
+					graph.addEdge("BF", "B", "F");
+					graph.addEdge("CG", "C", "G");
+					sleep(300);
+					atualizarGrafoTempoExecucao(graph);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}.start();
+
+	}	
+}

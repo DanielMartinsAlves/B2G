@@ -1,0 +1,11 @@
+package Utilidades;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Nodexy {
+	Map<String, Double[]> aMap = new HashMap<String, Double[]>();
+	public Nodexy() {
+		aMap.put("teste",{ 1.0, 2.0 });
+	}
+}

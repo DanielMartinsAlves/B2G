@@ -1,0 +1,104 @@
+package controller;
+
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
+
+public class GrafoController {
+
+	public void getGrafo(Graph graph) {
+		
+		atualizarGrafoTempoExecucao(graph);
+	}
+	public void inicializarGrafo(Graph graph) {
+		graph.clear();
+		graph.addNode("A");
+		Node node = graph.getNode("A");
+		node.setAttribute("xy", 1, 1);
+		graph.addNode("B");
+		node = graph.getNode("B");
+		node.setAttribute("xy", -1, -1);
+		graph.addNode("C");
+		node = graph.getNode("C");
+		node.setAttribute("xy", -1, 1);
+		graph.addNode("D");
+		node = graph.getNode("D");
+		node.setAttribute("xy", -1, 0.5);
+		graph.addNode("E");
+		node = graph.getNode("E");
+		node.setAttribute("xy", 0.5, -1);
+		graph.addNode("F");
+		node = graph.getNode("F");
+		node.setAttribute("xy", -0.7, -1);
+		graph.addNode("G");
+		node = graph.getNode("G");
+		node.setAttribute("xy", -1, 0.3);
+		graph.addNode("H");
+		node = graph.getNode("H");
+		node.setAttribute("xy", -0.4, -0.9);
+		graph.addNode("I");
+		node = graph.getNode("I");
+		node.setAttribute("xy", -0.1, -0.8);
+		graph.addNode("J");
+		node = graph.getNode("J");
+		node.setAttribute("xy", -0.2, 1);
+		graph.addNode("K");
+		node = graph.getNode("K");
+		node.setAttribute("xy", -0.3, -0.5);
+		graph.addNode("L");
+		node = graph.getNode("L");
+		node.setAttribute("xy", 0, -1);
+		graph.addNode("M");
+		node = graph.getNode("M");
+		node.setAttribute("xy", -1, 0);
+		graph.addNode("N");
+		node = graph.getNode("N");
+		node.setAttribute("xy", -0.7, 0.3);
+		graph.addNode("O");
+		node = graph.getNode("O");
+		node.setAttribute("xy", 0.2, 0.1);
+		graph.addNode("P");
+		node = graph.getNode("P");
+		node.setAttribute("xy", 0.4, -0.8);
+		graph.addNode("Q");
+		node = graph.getNode("Q");
+		node.setAttribute("xy", -0.9, -0.8);
+		graph.addNode("R");
+		node = graph.getNode("R");
+		node.setAttribute("xy", 0.4, -0.2);
+	}
+	public void atualizarGrafoTempoExecucao(Graph graph) {
+		new Thread() {
+			@Override
+			public void run() {
+				inicializarGrafo(graph);
+				graph.addEdge("AB", "A", "B");
+				graph.addEdge("BC", "B", "C");
+				graph.addEdge("CA", "C", "A");
+				graph.addEdge("AG", "A", "G");
+				graph.addEdge("BN", "B", "N");
+				graph.addEdge("CO", "C", "O");
+				graph.addEdge("AP", "A", "P");
+				graph.addEdge("BQ", "B", "Q");
+				graph.addEdge("CR", "C", "R");
+				graph.addEdge("AL", "A", "L");
+				graph.addEdge("BK", "B", "K");
+				graph.addEdge("CL", "C", "L");
+				
+			     
+				try {
+					sleep(300);
+					inicializarGrafo(graph);
+					graph.addEdge("AB", "A", "B");
+					graph.addEdge("BF", "B", "F");
+					graph.addEdge("CG", "C", "G");
+					sleep(300);
+					atualizarGrafoTempoExecucao(graph);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}.start();
+
+	}	
+}

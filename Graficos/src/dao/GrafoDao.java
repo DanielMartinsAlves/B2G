@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GrafoDao {
-	private List listaMatrizAdjacencia;
+	private List<MatrizAdjacencia> listaMatrizAdjacencia;
 	private List<Eletrodo> eletrodos;
 	public GrafoDao(Configuracoes config) {
 		eletrodos = new ArrayList<Eletrodo>();
@@ -29,9 +29,61 @@ public class GrafoDao {
 		carregarEletrodosDeArquivo(config);
 		listaMatrizAdjacencia = converterDadosEmMatrizAdjacencia(config);
 	}
-	
-	public List converterDadosEmMatrizAdjacencia(Configuracoes config) {
-		List listaMatrizAd = new ArrayList();
+	public List<MatrizAdjacencia> converterDadosEmMatrizAdjacenciaFicticia(Configuracoes config) {
+		List<MatrizAdjacencia> listaMatrizAd = new ArrayList<MatrizAdjacencia>();
+		MatrizAdjacencia matrizAd = new MatrizAdjacencia();
+		double[][] matriz = {{0,1,1,1,1,1,1,1},
+							{1,0,1,1,1,1,1,1},
+							{1,1,0,1,1,1,1,1},
+							{1,1,1,0,1,1,1,1},
+							{1,1,1,1,0,1,1,1},
+							{1,1,1,1,1,0,1,1},
+							{1,1,1,1,1,1,0,1},
+							{1,1,1,1,1,1,1,0}};
+		matrizAd.setDados(matriz);
+		listaMatrizAd.add(matrizAd);
+		
+		MatrizAdjacencia matrizAd2 = new MatrizAdjacencia();
+		double[][] matriz2 = {{0,0,0,0,1,1,1,1},
+				{0,0,0,0,1,1,1,1},
+				{0,0,0,0,1,1,1,1},
+				{0,0,0,0,1,1,1,1},
+				{1,1,1,1,0,0,0,0},
+				{1,1,1,1,0,0,0,0},
+				{1,1,1,1,0,0,0,0},
+				{1,1,1,1,0,0,0,0}};
+		matrizAd2.setDados(matriz2);
+		listaMatrizAd.add(matrizAd2);
+		
+		
+		MatrizAdjacencia matrizAd3 = new MatrizAdjacencia();
+		double[][] matriz3 = {{0,1,1,1,0,0,0,0},
+				{1,0,0,0,1,0,0,0},
+				{1,0,0,0,0,1,0,0},
+				{1,0,0,0,0,0,1,1},
+				{0,1,0,0,0,0,0,0},
+				{0,0,1,0,0,0,0,0},
+				{0,0,0,1,0,0,0,0},
+				{0,0,0,1,0,0,0,0}};
+		matrizAd3.setDados(matriz3);
+		listaMatrizAd.add(matrizAd3);
+		
+		MatrizAdjacencia matrizAd4 = new MatrizAdjacencia();
+		double[][] matriz4 = {{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0}};
+		matrizAd4.setDados(matriz4);
+		listaMatrizAd.add(matrizAd4);
+		
+		return listaMatrizAd;
+	}
+	public List<MatrizAdjacencia> converterDadosEmMatrizAdjacencia(Configuracoes config) {
+		List<MatrizAdjacencia> listaMatrizAd = new ArrayList<MatrizAdjacencia>();
 		Calculos c = new Calculos();
 		for(int inicial=0; inicial< eletrodos.get(0).getValores().size();inicial=inicial+config.getRegistrosPorAtualizacao()) {
 			int fim = (inicial+(config.getRegistrosPorGrafo()-1) >= eletrodos.get(0).getValores().size())?eletrodos.get(0).getValores().size():inicial+(config.getRegistrosPorGrafo()-1);
@@ -109,7 +161,7 @@ public class GrafoDao {
 	}
 	
 	public MatrizAdjacencia geMatrizAdjacencia() throws IndexOutOfBoundsException{	
-	MatrizAdjacencia matriz =  (MatrizAdjacencia) this.listaMatrizAdjacencia.get(0);
+	MatrizAdjacencia matriz =  this.listaMatrizAdjacencia.get(0);
 	this.listaMatrizAdjacencia.remove(0);
 	return matriz;
 	}

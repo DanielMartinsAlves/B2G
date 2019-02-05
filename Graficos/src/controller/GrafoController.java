@@ -111,6 +111,8 @@ public class GrafoController {
 		
 	}
 	public void proximoGrafo(Graph graph, Configuracoes config) throws IndexOutOfBoundsException{// cria Grafo a partir de matriz de adjacencia
+		if(config.isFromOpenBCI())
+			dao.carregarEletrodosFromJson(config);
 		getGrafoZerado(graph, config);//deixa o grafo zerado
 		MatrizAdjacencia matriz = dao.geMatrizAdjacencia();//pega a proxima matriz de adjacencia
 		for(int linha = 0; linha<graph.getNodeCount();linha++) {

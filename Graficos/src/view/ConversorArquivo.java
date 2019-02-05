@@ -35,7 +35,7 @@ public class ConversorArquivo {
 				arq = new FileReader(selectedFile);
 				BufferedReader lerArq = new BufferedReader(arq);
 				
-				FileWriter fw = new FileWriter("F:/DadosParaUso/"+selectedFile.getName().replace(".txt", "22.txt"), true);
+				FileWriter fw = new FileWriter("C:/DadosParaUso/"+selectedFile.getName().replace(".txt", "22.txt"), true);
 			    BufferedWriter bw = new BufferedWriter(fw);
 				writer = new PrintWriter(bw);
 				

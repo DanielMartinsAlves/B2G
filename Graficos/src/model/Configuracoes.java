@@ -14,6 +14,13 @@ public class Configuracoes {
 	private String fileName;
 	private boolean CARfilter;
 	private int nodesNumber;
+	private boolean fromOpenBCI;
+	public boolean isFromOpenBCI() {
+		return fromOpenBCI;
+	}
+	public void setFromOpenBCI(boolean fromOpenBCI) {
+		this.fromOpenBCI = fromOpenBCI;
+	}
 	public int getNodesNumber() {
 		return nodesNumber;
 	}

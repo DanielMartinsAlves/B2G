@@ -110,6 +110,7 @@ public class JPrincipal extends JFrame {
 		grafoController = new GrafoController();
 		Configuracoes config = new Configuracoes();
 		config.setNodesNumber(8);
+		config.setFromOpenBCI(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setBounds(100, 100, 1280, 720);
@@ -162,7 +163,7 @@ public class JPrincipal extends JFrame {
 					grafoController.atualizarGrafoTempoExecucao(graph, config);
 			}
 		});
-		btnIniciar.setBounds(2, 408, 300, 23);
+		btnIniciar.setBounds(2, 444, 300, 23);
 		pnOpcoes.add(btnIniciar);
 		
 		txtTempoAtualizacao = new JTextField();
@@ -176,23 +177,23 @@ public class JPrincipal extends JFrame {
 			}
 		});
 		txtTempoAtualizacao.setText("500");
-		txtTempoAtualizacao.setBounds(206, 147, 81, 20);
+		txtTempoAtualizacao.setBounds(206, 183, 81, 20);
 		pnOpcoes.add(txtTempoAtualizacao);
 		txtTempoAtualizacao.setColumns(10);
 		
 		JLabel lblAtualizaACada = new JLabel("Update (ms)");
-		lblAtualizaACada.setBounds(18, 153, 178, 14);
+		lblAtualizaACada.setBounds(18, 189, 178, 14);
 		pnOpcoes.add(lblAtualizaACada);
 		
 		txtRegistroPorGrafo = new JTextField();
 		txtRegistroPorGrafo.setEditable(false);
 		txtRegistroPorGrafo.setText("125");
 		txtRegistroPorGrafo.setColumns(10);
-		txtRegistroPorGrafo.setBounds(206, 178, 81, 20);
+		txtRegistroPorGrafo.setBounds(206, 214, 81, 20);
 		pnOpcoes.add(txtRegistroPorGrafo);
 		
 		JLabel lblRegistrosPorGrafo = new JLabel("Samples / graph");
-		lblRegistrosPorGrafo.setBounds(18, 181, 178, 14);
+		lblRegistrosPorGrafo.setBounds(18, 217, 178, 14);
 		pnOpcoes.add(lblRegistrosPorGrafo);
 		
 		JButton btnParar = new JButton("STOP");
@@ -201,17 +202,17 @@ public class JPrincipal extends JFrame {
 				config.setPararGrafo(true);
 			}
 		});
-		btnParar.setBounds(2, 442, 300, 23);
+		btnParar.setBounds(2, 478, 300, 23);
 		pnOpcoes.add(btnParar);
 		
 		txtLimiarPearson = new JTextField();
 		txtLimiarPearson.setText("0.8");
 		txtLimiarPearson.setColumns(10);
-		txtLimiarPearson.setBounds(204, 240, 81, 20);
+		txtLimiarPearson.setBounds(204, 276, 81, 20);
 		pnOpcoes.add(txtLimiarPearson);
 		
 		JLabel lblLimiarPearson = new JLabel("Pearson's Threshold");
-		lblLimiarPearson.setBounds(18, 243, 176, 14);
+		lblLimiarPearson.setBounds(18, 279, 176, 14);
 		pnOpcoes.add(lblLimiarPearson);
 		
 		JSeparator separator = new JSeparator();
@@ -233,7 +234,7 @@ public class JPrincipal extends JFrame {
 		
 		JLabel lblLayoutDoGrafo = new JLabel("Graph layout");
 		lblLayoutDoGrafo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLayoutDoGrafo.setBounds(18, 266, 269, 14);
+		lblLayoutDoGrafo.setBounds(18, 302, 269, 14);
 		pnOpcoes.add(lblLayoutDoGrafo);
 		
 		cbTipoGrafo = new JComboBox();
@@ -245,7 +246,7 @@ public class JPrincipal extends JFrame {
 		});
 		this.atualizarCampoLayouts();
 		cbTipoGrafo.setToolTipText("");
-		cbTipoGrafo.setBounds(18, 281, 152, 20);
+		cbTipoGrafo.setBounds(18, 317, 152, 20);
 		pnOpcoes.add(cbTipoGrafo);
 		
 		JComboBox comboBox = new JComboBox();
@@ -257,24 +258,25 @@ public class JPrincipal extends JFrame {
 		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Degree", "Clustering coefficient", "Eigenvector centrality", "Betweenness centrality"}));
 		comboBox.setToolTipText("");
-		comboBox.setBounds(18, 327, 269, 20);
+		comboBox.setBounds(18, 363, 269, 20);
 		pnOpcoes.add(comboBox);
 		
 		JLabel lblMtricaDoGrafo = new JLabel("Graph Metric");
 		lblMtricaDoGrafo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMtricaDoGrafo.setBounds(18, 308, 269, 14);
+		lblMtricaDoGrafo.setBounds(18, 344, 269, 14);
 		pnOpcoes.add(lblMtricaDoGrafo);
 		
 		txtOverLap = new JTextField();
 		txtOverLap.setText("0");
 		txtOverLap.setColumns(10);
-		txtOverLap.setBounds(206, 209, 81, 20);
+		txtOverLap.setBounds(206, 245, 81, 20);
 		pnOpcoes.add(txtOverLap);
 		
 		JLabel lblRegistrosatualizao = new JLabel("Overlap");
-		lblRegistrosatualizao.setBounds(18, 212, 178, 14);
+		lblRegistrosatualizao.setBounds(18, 248, 178, 14);
 		pnOpcoes.add(lblRegistrosatualizao);
 		JButton btnNewButton = new JButton("Select file...");
+		btnNewButton.setEnabled(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -293,24 +295,24 @@ public class JPrincipal extends JFrame {
 			}
 			
 		});
-		btnNewButton.setBounds(156, 63, 133, 23);
+		btnNewButton.setBounds(161, 103, 133, 23);
 		pnOpcoes.add(btnNewButton);
 		
 		txtSelectedFile = new JTextField();
 		txtSelectedFile.setEditable(false);
-		txtSelectedFile.setBounds(12, 64, 134, 20);
+		txtSelectedFile.setBounds(12, 104, 134, 20);
 		pnOpcoes.add(txtSelectedFile);
 		txtSelectedFile.setColumns(10);
 		
 		
 		ckExportData.setBackground(UIManager.getColor("Button.light"));
-		ckExportData.setBounds(18, 350, 284, 23);
+		ckExportData.setBounds(18, 386, 284, 23);
 		pnOpcoes.add(ckExportData);
 		
 		txtFileName = new JTextField();
 		txtFileName.setText("data-export.txt");
 		txtFileName.setToolTipText("Enter the file name");
-		txtFileName.setBounds(18, 377, 269, 20);
+		txtFileName.setBounds(18, 413, 269, 20);
 		pnOpcoes.add(txtFileName);
 		txtFileName.setColumns(10);
 		
@@ -327,11 +329,11 @@ public class JPrincipal extends JFrame {
 		
 		txtRate.setText("250");
 		txtRate.setColumns(10);
-		txtRate.setBounds(206, 116, 81, 20);
+		txtRate.setBounds(206, 152, 81, 20);
 		pnOpcoes.add(txtRate);
 		
 		JLabel lblRatems = new JLabel("Rate (Hz)");
-		lblRatems.setBounds(18, 122, 178, 14);
+		lblRatems.setBounds(18, 158, 178, 14);
 		pnOpcoes.add(lblRatems);
 		
 		JCheckBox ckCARfilter = new JCheckBox("CAR filter");
@@ -341,7 +343,7 @@ public class JPrincipal extends JFrame {
 			}
 		});
 		ckCARfilter.setBackground(UIManager.getColor("Button.light"));
-		ckCARfilter.setBounds(10, 93, 284, 23);
+		ckCARfilter.setBounds(10, 129, 284, 23);
 		pnOpcoes.add(ckCARfilter);
 		
 		JButton btnNewButton_1 = new JButton("New Layout");
@@ -358,7 +360,7 @@ public class JPrincipal extends JFrame {
 			
 			
 		});
-		btnNewButton_1.setBounds(180, 280, 107, 23);
+		btnNewButton_1.setBounds(180, 316, 107, 23);
 		pnOpcoes.add(btnNewButton_1);
 		
 		txtNodesNumber = new JTextField();
@@ -377,6 +379,18 @@ public class JPrincipal extends JFrame {
 		JLabel lblNodesNumber = new JLabel("Node's number");
 		lblNodesNumber.setBounds(12, 38, 184, 14);
 		pnOpcoes.add(lblNodesNumber);
+		
+		JCheckBox checkBox = new JCheckBox("Get data from OpenBCI");
+		checkBox.setSelected(true);
+		checkBox.setBackground(Color.WHITE);
+		checkBox.setBounds(10, 68, 284, 23);
+		checkBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				config.setFromOpenBCI(checkBox.isSelected());
+				btnNewButton.setEnabled(!checkBox.isSelected());
+			}
+		});
+		pnOpcoes.add(checkBox);
 		
 		
 		

@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import Utilidades.Calculos;
 import model.Configuracoes;
 import model.Eletrodo;
@@ -16,6 +20,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,62 +33,12 @@ public class GrafoDao {
 		eletrodos = new ArrayList<Eletrodo>();
 		for(int i=0;i<config.getNodesNumber();i++)
 		eletrodos.add(new Eletrodo());
-		carregarEletrodosDeArquivo(config);
-		listaMatrizAdjacencia = converterDadosEmMatrizAdjacencia(config);
+		if(!config.isFromOpenBCI()) {
+			carregarEletrodosDeArquivo(config);
+			listaMatrizAdjacencia = converterDadosEmMatrizAdjacencia(config);
+		}
 	}
-	public List<MatrizAdjacencia> converterDadosEmMatrizAdjacenciaFicticia(Configuracoes config) {
-		List<MatrizAdjacencia> listaMatrizAd = new ArrayList<MatrizAdjacencia>();
-		MatrizAdjacencia matrizAd = new MatrizAdjacencia();
-		double[][] matriz = {{0,1,1,1,1,1,1,1},
-							{1,0,1,1,1,1,1,1},
-							{1,1,0,1,1,1,1,1},
-							{1,1,1,0,1,1,1,1},
-							{1,1,1,1,0,1,1,1},
-							{1,1,1,1,1,0,1,1},
-							{1,1,1,1,1,1,0,1},
-							{1,1,1,1,1,1,1,0}};
-		matrizAd.setDados(matriz);
-		listaMatrizAd.add(matrizAd);
-		
-		MatrizAdjacencia matrizAd2 = new MatrizAdjacencia();
-		double[][] matriz2 = {{0,0,0,0,1,1,1,1},
-				{0,0,0,0,1,1,1,1},
-				{0,0,0,0,1,1,1,1},
-				{0,0,0,0,1,1,1,1},
-				{1,1,1,1,0,0,0,0},
-				{1,1,1,1,0,0,0,0},
-				{1,1,1,1,0,0,0,0},
-				{1,1,1,1,0,0,0,0}};
-		matrizAd2.setDados(matriz2);
-		listaMatrizAd.add(matrizAd2);
-		
-		
-		MatrizAdjacencia matrizAd3 = new MatrizAdjacencia();
-		double[][] matriz3 = {{0,1,1,1,0,0,0,0},
-				{1,0,0,0,1,0,0,0},
-				{1,0,0,0,0,1,0,0},
-				{1,0,0,0,0,0,1,1},
-				{0,1,0,0,0,0,0,0},
-				{0,0,1,0,0,0,0,0},
-				{0,0,0,1,0,0,0,0},
-				{0,0,0,1,0,0,0,0}};
-		matrizAd3.setDados(matriz3);
-		listaMatrizAd.add(matrizAd3);
-		
-		MatrizAdjacencia matrizAd4 = new MatrizAdjacencia();
-		double[][] matriz4 = {{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0}};
-		matrizAd4.setDados(matriz4);
-		listaMatrizAd.add(matrizAd4);
-		
-		return listaMatrizAd;
-	}
+	
 	public List<MatrizAdjacencia> converterDadosEmMatrizAdjacencia(Configuracoes config) {
 		List<MatrizAdjacencia> listaMatrizAd = new ArrayList<MatrizAdjacencia>();
 		Calculos c = new Calculos();
@@ -122,6 +79,7 @@ public class GrafoDao {
 		return retorno;
 	}
 	public void carregarEletrodosDeArquivo(Configuracoes config) {
+		
 		try {
 			
 			
@@ -164,5 +122,65 @@ public class GrafoDao {
 	MatrizAdjacencia matriz =  this.listaMatrizAdjacencia.get(0);
 	this.listaMatrizAdjacencia.remove(0);
 	return matriz;
+	}
+	
+	public void carregarEletrodosFromJson(Configuracoes config) {
+		this.eletrodos = new ArrayList<Eletrodo>();
+		for(int i=0;i<config.getNodesNumber();i++)
+		this.eletrodos.add(new Eletrodo());
+		  try {
+
+	            URL url = new URL("http://localhost:3000/api/data/"+config.getRegistrosPorGrafo());//your url i.e fetch data from .
+	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	            conn.setRequestMethod("GET");
+	            conn.setRequestProperty("Accept", "application/json");
+	            if (conn.getResponseCode() != 200) {
+	                throw new RuntimeException("Failed : HTTP Error code : "
+	                        + conn.getResponseCode());
+	            }
+	            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+	            BufferedReader br = new BufferedReader(in);
+	            String output;
+	            while ((output = br.readLine()) != null) {
+	            	
+	                System.out.println(output);
+	                JSONParser jsonParser = new JSONParser();
+	                JSONObject jsonObject = (JSONObject) jsonParser.parse(output);
+	                JSONArray arrayRegistros= (JSONArray) jsonObject.get("data");
+	                for(int i=0; i<arrayRegistros.size(); i++){
+	                	 JSONArray arrayEletrodos = (JSONArray) arrayRegistros.get(i);
+	                	 
+	                	 for(int z=0; z<config.getNodesNumber(); z++){
+	                		 String valor = (String) arrayEletrodos.get(z+1);
+	                		 if(valor.equals(" -"))
+	                			 valor="0";
+	                		 //colocar car filter
+	                		 Double valorDouble = Double.parseDouble(valor);
+	                		 this.eletrodos.get(z).adicionarValor(valorDouble);
+		                }
+	                }
+	            }
+	            
+	            conn.disconnect();
+	            List<MatrizAdjacencia> listaMatrizAd = new ArrayList<MatrizAdjacencia>();
+	            double [][] matriz = new double[config.getNodesNumber()][config.getNodesNumber()];
+	            for(int i = 0; i< eletrodos.size();i++) {
+					// inicia linha
+					double[] linha = new double[config.getNodesNumber()];
+					//System.out.println("Inicio Linha");
+					for(int z = 0;z < eletrodos.size();z++) {
+						Calculos c = new Calculos();
+						linha[z] = c.correlacaoDePearson(eletrodos.get(i).pegarValores(0, eletrodos.get(i).getValores().size()-1), eletrodos.get(z).pegarValores(0, eletrodos.get(z).getValores().size()-1), config);
+					}
+					matriz[i]=linha;
+					//System.out.println("Fim Linha");
+				}
+				MatrizAdjacencia matrizAd = new MatrizAdjacencia();
+				matrizAd.setDados(matriz);
+				listaMatrizAd.add(matrizAd);
+				this.listaMatrizAdjacencia = listaMatrizAd;
+	        } catch (Exception e) {
+	            System.out.println("Exception in NetClientGet:- " + e);
+	        }
 	}
 }

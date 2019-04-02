@@ -26,7 +26,11 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import Utilidades.ImagePanel;
 import controller.GrafoController;
@@ -43,6 +47,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import java.awt.SystemColor;
@@ -75,10 +80,28 @@ public class JPrincipal extends JFrame {
 	private JTextField txtRate;
 	private JComboBox cbTipoGrafo;
 	private JTextField txtNodesNumber;
+	DefaultCategoryDataset ds;
+	private int teste;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+            // Set System L&F	
+			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+		    } 
+		    catch (UnsupportedLookAndFeelException e) {
+		       // handle exception
+		    }
+		    catch (ClassNotFoundException e) {
+		       // handle exception
+		    }
+		    catch (InstantiationException e) {
+		       // handle exception
+		    }
+		    catch (IllegalAccessException e) {
+		       // handle exception
+		    }
 		Locale.setDefault(new Locale("en", "US"));
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -105,6 +128,11 @@ public class JPrincipal extends JFrame {
 				txtFileName.setEnabled(ckExportData.isSelected());
 			}
 		});
+		
+		
+		
+		
+		
 		
 		ckExportData.setSelected(true);
 		grafoController = new GrafoController();
@@ -214,10 +242,6 @@ public class JPrincipal extends JFrame {
 		JLabel lblLimiarPearson = new JLabel("Pearson's Threshold");
 		lblLimiarPearson.setBounds(18, 279, 176, 14);
 		pnOpcoes.add(lblLimiarPearson);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(2, 27, 292, 2);
-		pnOpcoes.add(separator);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -231,6 +255,46 @@ public class JPrincipal extends JFrame {
 				.addComponent(pnOpcoes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
 				.addComponent(pnGrafo, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
 		);
+		
+		JPanel panel = new JPanel();
+		pnGrafo.add(panel, BorderLayout.EAST);
+		
+		JPanel pnGrafoMetricas = new JPanel();
+		
+		JButton btnTeste = new JButton("teste");
+		this.teste = 7;
+		btnTeste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ds.addValue(9.5 +(teste-6), "minimo", "dia "+teste);
+				ds.addValue(20, "maximo", "dia "+teste);
+				ds.removeValue("minimo", "dia "+(teste-6));
+				ds.removeValue("maximo", "dia "+(teste-6));
+				teste++;
+			}
+		});
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(pnGrafoMetricas, GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addComponent(btnTeste)
+							.addGap(243))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(pnGrafoMetricas, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnTeste)
+					.addContainerGap(242, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
 		
 		JLabel lblLayoutDoGrafo = new JLabel("Graph layout");
 		lblLayoutDoGrafo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -382,7 +446,7 @@ public class JPrincipal extends JFrame {
 		
 		JCheckBox checkBox = new JCheckBox("Get data from OpenBCI");
 		checkBox.setSelected(true);
-		checkBox.setBackground(Color.WHITE);
+		checkBox.setBackground(SystemColor.text);
 		checkBox.setBounds(10, 68, 284, 23);
 		checkBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -399,8 +463,29 @@ public class JPrincipal extends JFrame {
 	  
 		
 		
+//////////cria o grafo
+		ds = new DefaultCategoryDataset();
+		ds.addValue(40.5, "maximo", "dia 1");
+		ds.addValue(38.2, "maximo", "dia 2");
+		ds.addValue(37.3, "maximo", "dia 3");
+		ds.addValue(31.5, "maximo", "dia 4");
+		ds.addValue(35.7, "maximo", "dia 5");
+		ds.addValue(42.5, "maximo", "dia 6");
 		
+		ds.addValue(41.5, "minimo", "dia 1");
+		ds.addValue(32.2, "minimo", "dia 2");
+		ds.addValue(37.3, "minimo", "dia 3");
+		ds.addValue(31.5, "minimo", "dia 4");
+		ds.addValue(34.7, "minimo", "dia 5");
+		ds.addValue(44.5, "minimo", "dia 6");
+
+		// cria o gráfico
+		JFreeChart grafico = ChartFactory.createLineChart("Grafico de Métrica", "Tempo", 
+		    "Valor", ds, PlotOrientation.VERTICAL, true, true, false);
+		ChartPanel CP = new ChartPanel(grafico);
 		
+		pnGrafoMetricas.setLayout(new java.awt.BorderLayout());
+		pnGrafoMetricas.add(CP, BorderLayout.CENTER);
 		 //ImagePanel panelImage = new ImagePanel("images/background.png");
 		 //pnGrafo.add(panelImage);
 	

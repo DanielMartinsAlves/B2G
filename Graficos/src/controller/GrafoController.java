@@ -53,7 +53,7 @@ public class GrafoController {
 	}
 	public void getGrafoZerado(Graph graph, Configuracoes config) { // retorna um grafo zerado
 		graph.clear();
-	    graph.addAttribute("ui.stylesheet", "graph { fill-mode: image-scaled; fill-image: url('data/images/escalpo2.png'); } node { text-style: bold; text-alignment: above; text-size:20px; fill-color: #008080; size: 30px; } node.zero {  fill-color: #ecf0f1; size: 30px;} node.um{fill-color: #2c0; size: 40px;} node.dois{fill-color: #4a0; size: 50px;} node.tres{fill-color: #680;size: 60px;} node.quatro{fill-color: #860;size:70px;} node.cinco{fill-color: #a40;size: 80px;} node.seis{fill-color: #c20;size: 90px;} node.sete{fill-color: #f00;size: 100px;} edge { shape: angle; arrow-shape: none; size: 3px; fill-color: #444; }");
+	    graph.addAttribute("ui.stylesheet", "graph { fill-mode: image-scaled; fill-image: url('data/images/escalpo2.png'); } node { text-style: bold; text-alignment: above; text-size:20px; fill-color: #008080; size: 30px; } node.zero {  fill-color: #008080; size: 30px;} node.um{fill-color: #2c0; size: 40px;} node.dois{fill-color: #4a0; size: 50px;} node.tres{fill-color: #680;size: 60px;} node.quatro{fill-color: #860;size:70px;} node.cinco{fill-color: #a40;size: 80px;} node.seis{fill-color: #c20;size: 90px;} node.sete{fill-color: #f00;size: 100px;} edge { shape: angle; arrow-shape: none; size: 3px; fill-color: #444; }");
 		
 	    
 	    for(int i = 0; i<config.getNodesNumber();i++) {

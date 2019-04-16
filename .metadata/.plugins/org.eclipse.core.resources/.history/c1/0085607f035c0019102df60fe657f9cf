@@ -1,0 +1,21 @@
+package controller;
+
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import model.Configuracoes;
+
+public class GraficoController {
+	
+	public GraficoController() {
+		
+	}
+	public void atualizarGrafico(DefaultCategoryDataset ds, Configuracoes config, double[] dados ) {
+		for(int i = 0; i< dados.length; i++) {
+			ds.addValue(dados[i], "eletrodo "+i, "dia "+(ds.getColumnCount()+1));
+		}
+		if(ds.getColumnCount()>5) {
+			ds.removeColumn(0);
+		}
+		
+	}
+}

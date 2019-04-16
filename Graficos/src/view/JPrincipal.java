@@ -188,7 +188,7 @@ public class JPrincipal extends JFrame {
 					config.setExportData(ckExportData.isSelected());
 					config.setFileName(txtFileName.getText());
 					grafoController.iniciarFonteDeDados(config);
-					grafoController.atualizarGrafoTempoExecucao(graph, config);
+					grafoController.atualizarGrafoTempoExecucao(graph, config, ds);
 			}
 		});
 		btnIniciar.setBounds(2, 444, 300, 23);
@@ -255,46 +255,7 @@ public class JPrincipal extends JFrame {
 				.addComponent(pnOpcoes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
 				.addComponent(pnGrafo, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
 		);
-		
-		JPanel panel = new JPanel();
-		pnGrafo.add(panel, BorderLayout.EAST);
-		
-		JPanel pnGrafoMetricas = new JPanel();
-		
-		JButton btnTeste = new JButton("teste");
 		this.teste = 7;
-		btnTeste.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ds.addValue(9.5 +(teste-6), "minimo", "dia "+teste);
-				ds.addValue(20, "maximo", "dia "+teste);
-				ds.removeValue("minimo", "dia "+(teste-6));
-				ds.removeValue("maximo", "dia "+(teste-6));
-				teste++;
-			}
-		});
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(pnGrafoMetricas, GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addComponent(btnTeste)
-							.addGap(243))))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(pnGrafoMetricas, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnTeste)
-					.addContainerGap(242, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
 		
 		JLabel lblLayoutDoGrafo = new JLabel("Graph layout");
 		lblLayoutDoGrafo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -456,6 +417,25 @@ public class JPrincipal extends JFrame {
 		});
 		pnOpcoes.add(checkBox);
 		
+		JLabel lblGraphics = new JLabel("Graphics");
+		lblGraphics.setBounds(124, 512, 133, 14);
+		pnOpcoes.add(lblGraphics);
+		
+		JButton btnNewButton_2 = new JButton("Metric");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFreeChart grafico = ChartFactory.createLineChart("Metric Graph", "Time","Value", ds, PlotOrientation.VERTICAL, true, true, false);
+				grafico.getPlot().setBackgroundPaint(Color.WHITE);
+				JGrafico g = new JGrafico();
+				ChartPanel CP = new ChartPanel(grafico);
+				g.pnGrafico.setLayout(new java.awt.BorderLayout());
+				g.pnGrafico.add(CP, BorderLayout.CENTER);
+				g.setVisible(true);
+			}
+		});
+		btnNewButton_2.setBounds(2, 533, 300, 23);
+		pnOpcoes.add(btnNewButton_2);
+		
 		
 		
 		
@@ -465,27 +445,10 @@ public class JPrincipal extends JFrame {
 		
 //////////cria o grafo
 		ds = new DefaultCategoryDataset();
-		ds.addValue(40.5, "maximo", "dia 1");
-		ds.addValue(38.2, "maximo", "dia 2");
-		ds.addValue(37.3, "maximo", "dia 3");
-		ds.addValue(31.5, "maximo", "dia 4");
-		ds.addValue(35.7, "maximo", "dia 5");
-		ds.addValue(42.5, "maximo", "dia 6");
-		
-		ds.addValue(41.5, "minimo", "dia 1");
-		ds.addValue(32.2, "minimo", "dia 2");
-		ds.addValue(37.3, "minimo", "dia 3");
-		ds.addValue(31.5, "minimo", "dia 4");
-		ds.addValue(34.7, "minimo", "dia 5");
-		ds.addValue(44.5, "minimo", "dia 6");
 
 		// cria o gráfico
-		JFreeChart grafico = ChartFactory.createLineChart("Grafico de Métrica", "Tempo", 
-		    "Valor", ds, PlotOrientation.VERTICAL, true, true, false);
-		ChartPanel CP = new ChartPanel(grafico);
 		
-		pnGrafoMetricas.setLayout(new java.awt.BorderLayout());
-		pnGrafoMetricas.add(CP, BorderLayout.CENTER);
+		
 		 //ImagePanel panelImage = new ImagePanel("images/background.png");
 		 //pnGrafo.add(panelImage);
 	

@@ -1,0 +1,462 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.swingViewer.ViewPanel;
+import org.graphstream.ui.view.Viewer;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import Utilidades.ImagePanel;
+import controller.GrafoController;
+import graficos.GraficoLinha;
+import model.Configuracoes;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import java.awt.SystemColor;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.util.Locale;
+import java.awt.event.ItemEvent;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class JPrincipal extends JFrame {
+
+	private JPanel contentPane;
+	private GrafoController grafoController;
+	private JTextField txtTempoAtualizacao;
+	private JTextField txtRegistroPorGrafo;
+	private JTextField txtLimiarPearson;
+	private Graph graph;
+	private JTextField txtOverLap;
+	private JTextField txtSelectedFile;
+	private JTextField txtFileName;
+	private JTextField txtRate;
+	private JComboBox cbTipoGrafo;
+	private JTextField txtNodesNumber;
+	DefaultCategoryDataset ds;
+	private int teste;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+            // Set System L&F	
+			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+		    } 
+		    catch (UnsupportedLookAndFeelException e) {
+		       // handle exception
+		    }
+		    catch (ClassNotFoundException e) {
+		       // handle exception
+		    }
+		    catch (InstantiationException e) {
+		       // handle exception
+		    }
+		    catch (IllegalAccessException e) {
+		       // handle exception
+		    }
+		Locale.setDefault(new Locale("en", "US"));
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JPrincipal frame = new JPrincipal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public void atualizarCampoLayouts() {
+		cbTipoGrafo.setModel(new DefaultComboBoxModel(grafoController.getTiposGrafo().toArray(new String[grafoController.getTiposGrafo().size()])));
+	}
+	public JPrincipal() {
+		JCheckBox ckExportData = new JCheckBox("Export data to file");
+		ckExportData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtFileName.setEnabled(ckExportData.isSelected());
+			}
+		});
+		
+		
+		
+		
+		
+		
+		ckExportData.setSelected(true);
+		grafoController = new GrafoController();
+		Configuracoes config = new Configuracoes();
+		config.setNodesNumber(8);
+		config.setFromOpenBCI(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setBounds(100, 100, 1280, 720);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JPanel pnOpcoes = new JPanel();
+		pnOpcoes.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnOpcoes.setBackground(UIManager.getColor("Button.light"));
+		
+		JPanel pnGrafo = new JPanel(); 
+		pnGrafo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnGrafo.setBackground(Color.WHITE);
+		pnGrafo.setLayout(new BorderLayout(0, 0));
+		pnOpcoes.setLayout(null);
+		
+		JLabel lblOpes = new JLabel("OPTIONS");
+		lblOpes.setBackground(Color.WHITE);
+		lblOpes.setBounds(2, 11, 292, 14);
+		lblOpes.setHorizontalAlignment(SwingConstants.CENTER);
+		pnOpcoes.add(lblOpes);
+		
+		
+		
+		
+		
+		
+		graph = new SingleGraph("Tutorial 1");
+
+		Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+		viewer.disableAutoLayout();
+		ViewPanel view = viewer.addDefaultView(false);   // false indicates "no JFrame".
+	    pnGrafo.add(view, BorderLayout.CENTER);
+	   
+	    grafoController.getGrafoZerado(graph, config);
+
+
+	    JButton btnIniciar = new JButton("START");
+		btnIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					config.setRegistrosPorAtualizacao(Integer.parseInt(txtRegistroPorGrafo.getText()) );
+					config.setTempoAtualizacao(Integer.parseInt(txtTempoAtualizacao.getText()));
+					config.setRegistrosPorGrafo(Integer.parseInt(txtRegistroPorGrafo.getText())+ Integer.parseInt(txtOverLap.getText()));
+					config.setLimiar(Double.parseDouble(txtLimiarPearson.getText()));
+					config.setPararGrafo(false);
+					config.setExportData(ckExportData.isSelected());
+					config.setFileName(txtFileName.getText());
+					grafoController.iniciarFonteDeDados(config);
+					grafoController.atualizarGrafoTempoExecucao(graph, config, ds);
+			}
+		});
+		btnIniciar.setBounds(2, 444, 300, 23);
+		pnOpcoes.add(btnIniciar);
+		
+		txtTempoAtualizacao = new JTextField();
+		txtTempoAtualizacao.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				double v1 = Double.parseDouble(txtRate.getText());
+				double v2 = Double.parseDouble(txtTempoAtualizacao.getText());
+				double result = v1*(v2/1000);
+;				txtRegistroPorGrafo.setText(""+Math.round(result));
+			}
+		});
+		txtTempoAtualizacao.setText("500");
+		txtTempoAtualizacao.setBounds(206, 183, 81, 20);
+		pnOpcoes.add(txtTempoAtualizacao);
+		txtTempoAtualizacao.setColumns(10);
+		
+		JLabel lblAtualizaACada = new JLabel("Update (ms)");
+		lblAtualizaACada.setBounds(18, 189, 178, 14);
+		pnOpcoes.add(lblAtualizaACada);
+		
+		txtRegistroPorGrafo = new JTextField();
+		txtRegistroPorGrafo.setEditable(false);
+		txtRegistroPorGrafo.setText("125");
+		txtRegistroPorGrafo.setColumns(10);
+		txtRegistroPorGrafo.setBounds(206, 214, 81, 20);
+		pnOpcoes.add(txtRegistroPorGrafo);
+		
+		JLabel lblRegistrosPorGrafo = new JLabel("Samples / graph");
+		lblRegistrosPorGrafo.setBounds(18, 217, 178, 14);
+		pnOpcoes.add(lblRegistrosPorGrafo);
+		
+		JButton btnParar = new JButton("STOP");
+		btnParar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				config.setPararGrafo(true);
+			}
+		});
+		btnParar.setBounds(2, 478, 300, 23);
+		pnOpcoes.add(btnParar);
+		
+		txtLimiarPearson = new JTextField();
+		txtLimiarPearson.setText("0.8");
+		txtLimiarPearson.setColumns(10);
+		txtLimiarPearson.setBounds(204, 276, 81, 20);
+		pnOpcoes.add(txtLimiarPearson);
+		
+		JLabel lblLimiarPearson = new JLabel("Pearson's Threshold");
+		lblLimiarPearson.setBounds(18, 279, 176, 14);
+		pnOpcoes.add(lblLimiarPearson);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(pnOpcoes, GroupLayout.PREFERRED_SIZE, 304, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnGrafo, GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(pnOpcoes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+				.addComponent(pnGrafo, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+		);
+		
+		JPanel panel = new JPanel();
+		pnGrafo.add(panel, BorderLayout.EAST);
+		
+		JPanel pnGrafoMetricas = new JPanel();
+		this.teste = 7;
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(pnGrafoMetricas, GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(pnGrafoMetricas, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(283, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
+		
+		JLabel lblLayoutDoGrafo = new JLabel("Graph layout");
+		lblLayoutDoGrafo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLayoutDoGrafo.setBounds(18, 302, 269, 14);
+		pnOpcoes.add(lblLayoutDoGrafo);
+		
+		cbTipoGrafo = new JComboBox();
+		cbTipoGrafo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				config.setTipoGrafo(cbTipoGrafo.getSelectedIndex());
+				grafoController.getGrafoZerado(graph, config);
+			}
+		});
+		this.atualizarCampoLayouts();
+		cbTipoGrafo.setToolTipText("");
+		cbTipoGrafo.setBounds(18, 317, 152, 20);
+		pnOpcoes.add(cbTipoGrafo);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				config.setTipoDeMetrica(comboBox.getSelectedIndex());
+				grafoController.getGrafoZerado(graph, config);
+			}
+		});
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Degree", "Clustering coefficient", "Eigenvector centrality", "Betweenness centrality"}));
+		comboBox.setToolTipText("");
+		comboBox.setBounds(18, 363, 269, 20);
+		pnOpcoes.add(comboBox);
+		
+		JLabel lblMtricaDoGrafo = new JLabel("Graph Metric");
+		lblMtricaDoGrafo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMtricaDoGrafo.setBounds(18, 344, 269, 14);
+		pnOpcoes.add(lblMtricaDoGrafo);
+		
+		txtOverLap = new JTextField();
+		txtOverLap.setText("0");
+		txtOverLap.setColumns(10);
+		txtOverLap.setBounds(206, 245, 81, 20);
+		pnOpcoes.add(txtOverLap);
+		
+		JLabel lblRegistrosatualizao = new JLabel("Overlap");
+		lblRegistrosatualizao.setBounds(18, 248, 178, 14);
+		pnOpcoes.add(lblRegistrosatualizao);
+		JButton btnNewButton = new JButton("Select file...");
+		btnNewButton.setEnabled(false);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			            "Text Files(*.txt)", "txt");
+			    fileChooser.setFileFilter(filter);
+			    fileChooser.setCurrentDirectory(new File(System
+			            .getProperty("user.home")));
+			    
+			    int result = fileChooser.showOpenDialog(new JFrame());
+			    if (result == JFileChooser.APPROVE_OPTION) {
+			        File selectedFile = fileChooser.getSelectedFile();
+			        txtSelectedFile.setText(selectedFile.getAbsolutePath());
+			        config.setArquivoLeitura(selectedFile);
+			    }
+			}
+			
+		});
+		btnNewButton.setBounds(161, 103, 133, 23);
+		pnOpcoes.add(btnNewButton);
+		
+		txtSelectedFile = new JTextField();
+		txtSelectedFile.setEditable(false);
+		txtSelectedFile.setBounds(12, 104, 134, 20);
+		pnOpcoes.add(txtSelectedFile);
+		txtSelectedFile.setColumns(10);
+		
+		
+		ckExportData.setBackground(UIManager.getColor("Button.light"));
+		ckExportData.setBounds(18, 386, 284, 23);
+		pnOpcoes.add(ckExportData);
+		
+		txtFileName = new JTextField();
+		txtFileName.setText("data-export.txt");
+		txtFileName.setToolTipText("Enter the file name");
+		txtFileName.setBounds(18, 413, 269, 20);
+		pnOpcoes.add(txtFileName);
+		txtFileName.setColumns(10);
+		
+		txtRate = new JTextField();
+		txtRate.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				double v1 = Double.parseDouble(txtRate.getText());
+				double v2 = Double.parseDouble(txtTempoAtualizacao.getText());
+				double result = v1*(v2/1000);
+;				txtRegistroPorGrafo.setText(""+Math.round(result));
+			}
+		});
+		
+		txtRate.setText("250");
+		txtRate.setColumns(10);
+		txtRate.setBounds(206, 152, 81, 20);
+		pnOpcoes.add(txtRate);
+		
+		JLabel lblRatems = new JLabel("Rate (Hz)");
+		lblRatems.setBounds(18, 158, 178, 14);
+		pnOpcoes.add(lblRatems);
+		
+		JCheckBox ckCARfilter = new JCheckBox("CAR filter");
+		ckCARfilter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				config.setCARfilter(ckCARfilter.isSelected());
+			}
+		});
+		ckCARfilter.setBackground(UIManager.getColor("Button.light"));
+		ckCARfilter.setBounds(10, 129, 284, 23);
+		pnOpcoes.add(ckCARfilter);
+		
+		JButton btnNewButton_1 = new JButton("New Layout");
+		JPrincipal pricipal = this;
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					NodesPosition fr = new NodesPosition(pricipal);
+					fr.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			
+			
+		});
+		btnNewButton_1.setBounds(180, 316, 107, 23);
+		pnOpcoes.add(btnNewButton_1);
+		
+		txtNodesNumber = new JTextField();
+		txtNodesNumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				config.setNodesNumber(Integer.parseInt(txtNodesNumber.getText()));
+				grafoController.getGrafoZerado(graph, config);
+			}
+		});
+		txtNodesNumber.setText("8");
+		txtNodesNumber.setBounds(206, 36, 81, 20);
+		pnOpcoes.add(txtNodesNumber);
+		txtNodesNumber.setColumns(10);
+		
+		JLabel lblNodesNumber = new JLabel("Node's number");
+		lblNodesNumber.setBounds(12, 38, 184, 14);
+		pnOpcoes.add(lblNodesNumber);
+		
+		JCheckBox checkBox = new JCheckBox("Get data from OpenBCI");
+		checkBox.setSelected(true);
+		checkBox.setBackground(SystemColor.text);
+		checkBox.setBounds(10, 68, 284, 23);
+		checkBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				config.setFromOpenBCI(checkBox.isSelected());
+				btnNewButton.setEnabled(!checkBox.isSelected());
+			}
+		});
+		pnOpcoes.add(checkBox);
+		
+		
+		
+		
+		contentPane.setLayout(gl_contentPane);
+	  
+		
+		
+//////////cria o grafo
+		ds = new DefaultCategoryDataset();
+
+		// cria o gráfico
+		JFreeChart grafico = ChartFactory.createLineChart("Grafico de Métrica", "Tempo", 
+		    "Valor", ds, PlotOrientation.VERTICAL, true, true, false);
+		grafico.getPlot().setBackgroundPaint(Color.WHITE);
+		ChartPanel CP = new ChartPanel(grafico);
+		pnGrafoMetricas.setLayout(new java.awt.BorderLayout());
+		pnGrafoMetricas.add(CP, BorderLayout.CENTER);
+		 //ImagePanel panelImage = new ImagePanel("images/background.png");
+		 //pnGrafo.add(panelImage);
+	
+	}
+}

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import org.graphstream.algorithm.Algorithm;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import Utilidades.Nodexy;
 import algoritmos.AlgoritmoController;
@@ -30,7 +31,9 @@ import model.MatrizAdjacencia;
 public class GrafoController {
 	private GrafoDao dao;
 	private PrintWriter writer;
+	private GraficoController graficoController;
 	public GrafoController(){
+		graficoController = new GraficoController();
 	}
 	public void iniciarFonteDeDados(Configuracoes config) {
 		 dao = new GrafoDao(config);
@@ -126,7 +129,7 @@ public class GrafoController {
 		}
 		
 	}
-	public void atualizarGrafoTempoExecucao(Graph graph, Configuracoes config) { // cria trhead para executar em paralelo
+	public void atualizarGrafoTempoExecucao(Graph graph, Configuracoes config, DefaultCategoryDataset ds) { // cria trhead para executar em paralelo
 		new Thread() {
 			@Override
 			public void run() {
@@ -137,6 +140,13 @@ public class GrafoController {
 					Colorir alg= new Colorir(config);
 					alg.init(graph);
 					alg.compute();
+					String[] arrString = alg.getDados().split(",");
+					double[] arrDouble = new double[arrString.length];
+					for(int i=0; i<arrString.length; i++)
+					{
+					   arrDouble[i] = Double.parseDouble(arrString[i]);
+					}
+					graficoController.atualizarGrafico(ds, config, arrDouble);
 					if(config.isExportData())
 					writer.println(alg.getDados());
 					// espera para atualizar mais uma vez
@@ -144,7 +154,7 @@ public class GrafoController {
 					
 					//se alguém apertar em parar
 					if(!config.isPararGrafo()) {
-					atualizarGrafoTempoExecucao(graph, config); // repete o metodo
+					atualizarGrafoTempoExecucao(graph, config, ds); // repete o metodo
 					}else {
 						if(config.isExportData()) {
 						 writer.close();

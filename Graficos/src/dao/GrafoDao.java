@@ -38,7 +38,9 @@ public class GrafoDao {
 			listaMatrizAdjacencia = converterDadosEmMatrizAdjacencia(config);
 		}
 	}
-	
+	public List<Eletrodo> getEletrodos(){
+		return this.eletrodos;
+	}
 	public List<MatrizAdjacencia> converterDadosEmMatrizAdjacencia(Configuracoes config) {
 		List<MatrizAdjacencia> listaMatrizAd = new ArrayList<MatrizAdjacencia>();
 		Calculos c = new Calculos();
@@ -150,12 +152,20 @@ public class GrafoDao {
 	                for(int i=0; i<arrayRegistros.size(); i++){
 	                	 JSONArray arrayEletrodos = (JSONArray) arrayRegistros.get(i);
 	                	 
+	                	 String[] arrayLinha = new String[config.getNodesNumber()+1];
+	                	 arrayLinha[0] = "0";
 	                	 for(int z=0; z<config.getNodesNumber(); z++){
-	                		 String valor = (String) arrayEletrodos.get(z+1);
-	                		 if(valor.equals(" -"))
-	                			 valor="0";
+	                		 arrayLinha[z+1] = (String) arrayEletrodos.get(z+1);
+	                		 if(arrayLinha[z+1].equals(" -"))
+	                			 arrayLinha[z+1]="0";
+		                }
+	                	 
+	                	 if(config.isCARfilter()) {
+	                		 arrayLinha = this.calcularCARFilter(Arrays.copyOfRange(arrayLinha, 1, config.getNodesNumber()+1), config.getNodesNumber()+1);
+	 				     }
+	                	 for(int z=0; z<config.getNodesNumber(); z++){
 	                		 //colocar car filter
-	                		 Double valorDouble = Double.parseDouble(valor);
+	                		 Double valorDouble = Double.parseDouble(arrayLinha[z+1]);
 	                		 this.eletrodos.get(z).adicionarValor(valorDouble);
 		                }
 	                }

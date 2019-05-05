@@ -56,9 +56,9 @@ public class GrafoController {
 	}
 	public void getGrafoZerado(Graph graph, Configuracoes config) { // retorna um grafo zerado
 		graph.clear();
-	    graph.addAttribute("ui.stylesheet", "graph { fill-mode: image-scaled; fill-image: url('data/images/escalpo2.png'); } node { text-style: bold; text-alignment: above; text-size:20px; fill-color: #008080; size: 30px; } node.zero {  fill-color: #008080; size: 30px;} node.um{fill-color: #2c0; size: 40px;} node.dois{fill-color: #4a0; size: 50px;} node.tres{fill-color: #680;size: 60px;} node.quatro{fill-color: #860;size:70px;} node.cinco{fill-color: #a40;size: 80px;} node.seis{fill-color: #c20;size: 90px;} node.sete{fill-color: #f00;size: 100px;} edge { shape: angle; arrow-shape: none; size: 3px; fill-color: #444; }");
+	    graph.addAttribute("ui.stylesheet", "node { text-style: bold; text-alignment: center; text-size:12px; fill-color: #008080; size: 30px;text-background-mode: rounded-box; text-background-color: #008080; text-padding: 3px,2px;} node.zero {  fill-color: #008080; text-background-color: #008080; size: 30px;} node.um{fill-color: #2c0;text-background-color: #2c0; size: 40px;} node.dois{fill-color: #4a0;text-background-color: #4a0; size: 50px;} node.tres{fill-color: #680;text-background-color: #680; size: 60px;} node.quatro{fill-color: #860;text-background-color: #860;size:70px;} node.cinco{fill-color: #a40;text-background-color: #a40;size: 80px;} node.seis{fill-color: #c20;text-background-color: #c20;size: 90px;} node.sete{fill-color: #f00;text-background-color: #f00;size: 100px;} edge { shape: angle; arrow-shape: none; size: 3px; fill-color: #444; }");
 		
-	    
+	    //graph { fill-mode: image-scaled; /*fill-image: url('images/escalpo2.png');*/ }
 	    for(int i = 0; i<config.getNodesNumber();i++) {
 		    graph.addNode("Node"+i);
 	    }
@@ -146,6 +146,7 @@ public class GrafoController {
 					{
 					   arrDouble[i] = Double.parseDouble(arrString[i]);
 					}
+					
 					graficoController.atualizarGrafico(ds, config, arrDouble);
 					if(config.isExportData())
 					writer.println(alg.getDados());

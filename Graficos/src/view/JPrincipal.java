@@ -89,6 +89,7 @@ public class JPrincipal extends JFrame {
 		try {
             // Set System L&F	
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+			System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		    } 
 		    catch (UnsupportedLookAndFeelException e) {
 		       // handle exception

@@ -36,6 +36,7 @@ public class GraficoController {
 		for(int i = 0; i< dados.length; i++) {
 			
 			ds.addValue(dados[i], nodesNames[i+1], ""+(valorFinal+1));
+			
 		}
 		if(ds.getColumnCount()>20) {
 			ds.removeColumn(0);

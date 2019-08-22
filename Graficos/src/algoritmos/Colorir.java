@@ -119,19 +119,19 @@ public class Colorir implements Algorithm{
 				node.addAttribute("ui.label", (node.getAttribute("ui.label").toString().split("-")[0])+" - "+c);
 				if(c == 0) {
 				node.addAttribute("ui.class", "zero");
-				}else if(c == (config.getNodesNumber()/7)) {
+				}else if(c ==((double)config.getNodesNumber()/7)) {
 					node.addAttribute("ui.class", "um");
-				}else if(c<=(config.getNodesNumber()/7)*2) {
+				}else if(c<=((double)config.getNodesNumber()/7)*2) {
 					node.addAttribute("ui.class", "dois");
-				}else if(c<=(config.getNodesNumber()/7)*3) {
+				}else if(c<=((double)config.getNodesNumber()/7)*3) {
 					node.addAttribute("ui.class", "tres");
-				}else if(c<=(config.getNodesNumber()/7)*4) {
+				}else if(c<=((double)config.getNodesNumber()/7)*4) {
 					node.addAttribute("ui.class", "quatro");
-				}else if(c<=(config.getNodesNumber()/7)*5) {
+				}else if(c<=((double)config.getNodesNumber()/7)*5) {
 					node.addAttribute("ui.class", "cinco");
-				}else if(c<=(config.getNodesNumber()/7)*6) {
+				}else if(c<=((double)config.getNodesNumber()/7)*6) {
 					node.addAttribute("ui.class", "seis");
-				}else if(c<=(config.getNodesNumber()/7)*7) {
+				}else if(c<=((double)config.getNodesNumber()/7)*7) {
 					node.addAttribute("ui.class", "sete");
 				}
 			}

@@ -14,13 +14,13 @@ public class AlgoritmoController {
 	}
 	double arredondar(double valor, int casas, int ceilOrFloor) {
 	    double arredondado = valor;
-	   /* arredondado *= (Math.pow(10, casas));
+	    arredondado *= (Math.pow(10, casas));
 	    if (ceilOrFloor == 0) {
 	        arredondado = Math.ceil(arredondado);           
 	    } else {
 	        arredondado = Math.floor(arredondado);
 	    }
-	    arredondado /= (Math.pow(10, casas));*/
+	    arredondado /= (Math.pow(10, casas));
 	    return arredondado;
 	}
 	public int calcularGrau(Node n) {

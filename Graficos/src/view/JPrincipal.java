@@ -108,6 +108,7 @@ public class JPrincipal extends JFrame {
 			public void run() {
 				try {
 					JPrincipal frame = new JPrincipal();
+					frame.setTitle("B2G");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -268,6 +269,7 @@ public class JPrincipal extends JFrame {
 			public void itemStateChanged(ItemEvent arg0) {
 				config.setTipoGrafo(cbTipoGrafo.getSelectedIndex());
 				grafoController.getGrafoZerado(graph, config);
+				ds.clear();
 			}
 		});
 		this.atualizarCampoLayouts();

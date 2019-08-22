@@ -35,8 +35,8 @@ public class Calculos {
 		coe1 = (contador * valor1) - (valor2 * valor3);
 		coe2 =Math.sqrt(((contador*valor4)-Math.pow(valor2, 2))*((contador*valor5)- Math.pow(valor3, 2))); 
 		
-		Double coeficiente = coe1 / coe2;
-		//System.out.println("Pearson: "+coeficiente);
+		Double coeficiente = (coe1==0 || coe2==0)?0: coe1 / coe2;
+		System.out.println("-----------------------------------------"+coe1+" --"+coe2+"--Pearson: "+coeficiente);
 		//return(coeficiente>=config.getLimiar() || coeficiente<=-config.getLimiar())?1.0:0.0;// pensar se deve ser usado depois
 		return(coeficiente>=config.getLimiar())?1.0:0.0;
 	}

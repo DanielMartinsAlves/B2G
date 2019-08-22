@@ -59,10 +59,11 @@
 	<section name="FatJarPackageWizard">
 		<item value="C:\Users\bielz\eclipse-workspace" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="JPrincipal - Graficos" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="F:\graph.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="C:\Users\bielz\OneDrive\Documentos\mestrado\mestrado\graph.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\bielz\OneDrive\Documentos\mestrado\mestrado\graph.jar"/>
 			<item value="F:\graph.jar"/>
 			<item value="F:\grafoo.jar"/>
 			<item value="F:\grafooo.jar"/>
